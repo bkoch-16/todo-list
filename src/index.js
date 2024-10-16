@@ -1,9 +1,9 @@
 import "./styles.css"
-import {CreateProject} from "./structure-logic.js"
+import { CreateProject , CreateTask , placeTaskInProject } from "./structure-logic.js"
 
 
 
-let project1 = new CreateProject("YES");
-console.log(project1)
-console.log(project1.list); // This will log: []
+let projectDefault= new CreateProject("General");
+let taskTest = new CreateTask("Finish project", "Wrap up display", "Tomorrow", "HIGH", projectDefault)
+placeTaskInProject(taskTest)
 
