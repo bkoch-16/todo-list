@@ -19,7 +19,7 @@ export function loadProject(projectObject) {
     const contentContainer = document.querySelector("#project-content")
     
     const projectTitle = document.querySelector("#active-title")
-    projectTitle.textContent = "Title: " + projectObject.title
+    projectTitle.textContent = "Project: " + projectObject.title
 
     const projectContent = document.createElement("div")
     projectContent.id = "activeProjectContent"
@@ -54,5 +54,5 @@ export function loadProject(projectObject) {
         i++
     }
     contentContainer.appendChild(projectContent)
-
 }
+
