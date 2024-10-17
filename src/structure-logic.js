@@ -20,3 +20,4 @@ export function placeTaskInProject(taskObject) {
     taskObject.projectName.list.push(taskObject)
     console.log(taskObject.projectName.list)
 }
+
