@@ -1,7 +1,7 @@
 export class CreateProject {
     constructor(title) {
         this.title = title;
-        this.list = []; // `list` is an instance property
+        this.list = [];
     }
 }
 
