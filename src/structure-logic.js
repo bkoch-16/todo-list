@@ -21,3 +21,10 @@ export function placeTaskInProject(taskObject) {
     console.log(taskObject.projectName.list)
 }
 
+export function createNewProject(myProjects) {
+    let title = document.querySelector("#project-title-input").value
+    let newProject = new CreateProject(title)
+    myProjects.push(newProject)
+    console.log(myProjects)
+    return myProjects
+}

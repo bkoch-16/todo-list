@@ -1,12 +1,13 @@
 import "./styles.css"
-import { CreateProject , CreateTask , placeTaskInProject } from "./structure-logic.js"
-import { setupProjectButtons , loadProject } from "./display-changes.js";
+import { CreateProject , CreateTask , placeTaskInProject , createNewProject } from "./structure-logic.js"
+import { setupProjectButtons , loadProject, loadNewProjectButtons } from "./display-changes.js";
 
+
+const myProjects = []
 
 setupProjectButtons()
-let projectDefault= new CreateProject("General");
-console.log(projectDefault)
-let taskTest = new CreateTask("Finish project", "Wrap up display", "Tomorrow", "HIGH", projectDefault)
+myProjects[0]= new CreateProject("General");
+let taskTest = new CreateTask("Finish project", "Wrap up display", "Tomorrow", "HIGH", myProjects[0])
 placeTaskInProject(taskTest)
 
 let newTaskButton = document.querySelector("#new-task")
@@ -21,11 +22,27 @@ newTaskButton.addEventListener('click', () => {
 let newProjectButton = document.querySelector("#new-project")
 let newProjectForm = document.querySelector("#new-project-form")
 let projectDialog = document.querySelector("#projectDialog")
+let projectCancel = document.querySelector("#project-cancel-button")
 
 newProjectButton.addEventListener('click', () => {
     newProjectForm.style.display = "block"
     projectDialog.showModal()
 })
 
-loadProject(projectDefault)
+projectCancel.addEventListener('click', () => {
+    projectDialog.close()
+    newProjectForm.reset()
+})
+
+newProjectForm.addEventListener('submit', () => {
+    event.preventDefault()
+    createNewProject(myProjects)
+    loadNewProjectButtons(myProjects)
+    newProjectForm.reset()
+    document.querySelector("#project-title-input").focus()
+})
+
+
+
+loadProject(myProjects[0])
 

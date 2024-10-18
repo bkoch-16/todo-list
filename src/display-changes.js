@@ -3,9 +3,16 @@ export function setupProjectButtons() {
     
     const generalProject = document.createElement("button")
     generalProject.classList.add("project-button")
-    generalProject.id = "projectOne"
+    generalProject.id = "project-1"
     generalProject.textContent = "General"
     buttonContainer.appendChild(generalProject)
+
+    const projectDropdown = document.querySelector("#task-project-dropdown")
+    
+    const projectOne = document.createElement("option")
+    projectOne.value = generalProject.textContent
+    projectOne.textContent = generalProject.textContent
+    projectDropdown.appendChild(projectOne)
 
     const addProject = document.createElement("button")
     addProject.id = "new-project"
@@ -13,6 +20,28 @@ export function setupProjectButtons() {
     buttonContainer.appendChild(addProject)
 
     return
+}
+
+export function loadNewProjectButtons(myProjects) {
+    const buttonContainer = document.querySelector("#project-buttons")
+    const referenceButton = document.querySelector("#new-project")
+    const projectDropdown = document.querySelector("#task-project-dropdown")
+
+    for (let i = 0; i < myProjects.length; i++) {
+        if (document.querySelector(`#project-${i+1}`) === null) {
+            console.log(`test-${i}`)
+            const newProjectButton = document.createElement("button")
+            newProjectButton.id=`project-${i}`
+            newProjectButton.classList.add("project-button")
+            newProjectButton.textContent = myProjects[i].title
+            buttonContainer.insertBefore(newProjectButton, referenceButton)
+
+            const newProjectOption = document.createElement("option")
+            newProjectOption.value = newProjectButton.textContent
+            newProjectOption.textContent = newProjectButton.textContent
+            projectDropdown.appendChild(newProjectOption)
+        }
+    }
 }
 
 export function loadProject(projectObject) {
