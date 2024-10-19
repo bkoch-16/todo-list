@@ -31,7 +31,7 @@ export function loadNewProjectButtons(myProjects) {
         if (document.querySelector(`#project-${i+1}`) === null) {
             console.log(`test-${i}`)
             const newProjectButton = document.createElement("button")
-            newProjectButton.id=`project-${i}`
+            newProjectButton.id=`project-${i+1}`
             newProjectButton.classList.add("project-button")
             newProjectButton.textContent = myProjects[i].title
             buttonContainer.insertBefore(newProjectButton, referenceButton)
@@ -44,15 +44,31 @@ export function loadNewProjectButtons(myProjects) {
     }
 }
 
+export function connectNewProjectButtons(myProjects) {
+
+    for (let i = 0; i < myProjects.length; i++) {
+        console.log(myProjects)
+        let projectButtonId = `#project-${i+1}`
+        console.log(projectButtonId)
+        const activateProject = document.querySelector(projectButtonId)
+        console.log(activateProject)
+        activateProject.addEventListener('click', () => {
+            loadProject(myProjects[i])
+        })
+
+
+    }
+}
+
 export function loadProject(projectObject) {
     const contentContainer = document.querySelector("#project-content")
-    
     const projectTitle = document.querySelector("#active-title")
     projectTitle.textContent = "Project: " + projectObject.title
 
     const projectContent = document.createElement("div")
     projectContent.id = "activeProjectContent"
 
+    projectContent.replaceChildren()
 
     let i = 0
     while (i < projectObject.list.length) {
