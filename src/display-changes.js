@@ -65,10 +65,16 @@ export function loadProject(projectObject) {
     const projectTitle = document.querySelector("#active-title")
     projectTitle.textContent = "Project: " + projectObject.title
 
+    const oldContentToRemove = document.querySelector("#activeProjectContent")
+
+    if (oldContentToRemove) {
+        contentContainer.removeChild(oldContentToRemove)
+    }
+
     const projectContent = document.createElement("div")
     projectContent.id = "activeProjectContent"
 
-    projectContent.replaceChildren()
+    
 
     let i = 0
     while (i < projectObject.list.length) {
