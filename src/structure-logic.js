@@ -1,7 +1,12 @@
 export class CreateProject {
-    constructor(myProjects) {
-        let title = document.querySelector("#project-title-input").value
-        this.title = title;
+    constructor(title) {
+        if (title === "General") {
+            this.title = title;
+        }
+        else {
+            let formTitle = document.querySelector("#project-title-input").value
+            this.title = formTitle
+        }
         this.list = [];
     }
 }

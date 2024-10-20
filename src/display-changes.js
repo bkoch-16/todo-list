@@ -33,6 +33,7 @@ export function loadNewProjectButtons(myProjects) {
             const newProjectButton = document.createElement("button")
             newProjectButton.id=`project-${i+1}`
             newProjectButton.classList.add("project-button")
+            console.log(myProjects[i].title)
             newProjectButton.textContent = myProjects[i].title
             buttonContainer.insertBefore(newProjectButton, referenceButton)
 

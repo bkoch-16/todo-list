@@ -31,7 +31,6 @@ newTaskForm.addEventListener('submit', () => {
     loadProject(newTask.projectName)
     newTaskForm.reset()
     document.querySelector("#task-title-input").focus()
-
 })
 
 let newProjectButton = document.querySelector("#new-project")
