@@ -80,9 +80,9 @@ export function connectTaskElements(projectObject) {
 
         const deleteButton = taskContent.querySelector(".deleteTask")
         deleteButton.addEventListener('click', () => {
-            //add logic to deal with this
+            projectObject.list.splice(i,1)
+            loadProject(projectObject)
         })
-
     }
 }
 
