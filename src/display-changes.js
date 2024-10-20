@@ -76,6 +76,7 @@ export function connectTaskElements(projectObject) {
         const viewButton = taskContent.querySelector(".viewTask")
         viewButton.addEventListener('click', () => {
             createViewDialog(projectObject.list[i])
+            connectTaskElements(projectObject)
         })
 
         const deleteButton = taskContent.querySelector(".deleteTask")
@@ -83,6 +84,14 @@ export function connectTaskElements(projectObject) {
             projectObject.list.splice(i,1)
             loadProject(projectObject)
         })
+
+        if (document.querySelector("#closeDialog")) {
+            const closeButton = document.querySelector("#closeDialog")
+            closeButton.addEventListener('click', () => {
+                viewDialog.close()
+            })
+        }
+        
     }
 }
 
