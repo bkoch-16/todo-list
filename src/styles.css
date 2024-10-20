@@ -49,6 +49,20 @@ dialog[open] {
     width: 60px;
 }
 
+.entry-set {
+    display: flex;
+    gap: 3px;
+    margin: 3px 0px;
+}
+
+#task-submit-button {
+    width: 50px;
+}
+
+#task-cancel-button {
+    width: 50px;
+}
+
 #project-content {
     box-sizing: border-box;
     width: 300px;

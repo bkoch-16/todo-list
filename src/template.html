@@ -25,13 +25,13 @@
             </p>
             <p class="entry-set">
                 <label for="desc" class="task-desc">Description</label>
-                <input type="text" name="desc" id="task-desc-input">
+                <textarea name="desc" id="task-desc-input"></textarea>
             </p>
-            <p class="entry-set"></p>
+            <p class="entry-set">
                 <label for="due-date" class="task-due-date">Due Date</label>
                 <input type="date" name="due-date" id="task-due-date-input">
             </p>
-            <p class="entry-set"></p>
+            <p class="entry-set">
                 <label for="priority" class="task-priority">Priority</label>
                 <select name="priority" id="task-priority-dropdown">
                     <option value="urgent">Urgent</option>
@@ -40,13 +40,13 @@
                     <option value="low">Low</option>
                 </select>
             </p>
-            <p class="entry-set"></p>
+            <p class="entry-set">
                 <label for="project" class="task-project">Project</label>
                 <select name="project" id="task-project-dropdown">
                 </select>
             </p>
             <button type="submit" id="task-submit-button">Submit</button>
-            <button type="button" id="task-cancel-button" class="form-btn">Cancel</button>
+            <button type="button" id="task-cancel-button">Cancel</button>
         </form>
     </dialog>
     <dialog id="projectDialog">
@@ -62,7 +62,7 @@
     </dialog>
     <dialog id="viewDialog">
         <div id="dialogContent">
-            
+
         </div>
     </dialog>
 </body>
