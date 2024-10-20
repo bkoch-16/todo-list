@@ -61,14 +61,28 @@ export function connectNewProjectButtons(myProjects) {
     }
 }
 
-export function connectCheckBox(projectObject) {
+export function connectTaskElements(projectObject) {
     const projectTitle = document.querySelector("#active-title")
     for (let i = 0; i < projectObject.list.length; i++) {
         const taskContent = document.getElementById(i)
         const checkBox = taskContent.querySelector(".taskCheckBox")
         checkBox.addEventListener('change', () => {
-            projectObject.list[i].checklist = (projectObject.list[i].checklist === true) ? projectObject.list[i].checklist = false : projectObject.list[i].checklist = true
+            projectObject.list[i].checklist = 
+                (projectObject.list[i].checklist === true) ? 
+                projectObject.list[i].checklist = false : 
+                projectObject.list[i].checklist = true
         })
+
+        const viewButton = taskContent.querySelector(".viewTask")
+        viewButton.addEventListener('click', () => {
+            //add dialog to deal with this?
+        })
+
+        const deleteButton = taskContent.querySelector(".deleteTask")
+        deleteButton.addEventListener('click', () => {
+            //add logic to deal with this
+        })
+
     }
 }
 
@@ -130,6 +144,6 @@ export function loadProject(projectObject) {
         i++
     }
     contentContainer.appendChild(projectContent)
-    connectCheckBox(projectObject)
+    connectTaskElements(projectObject)
 }
 
