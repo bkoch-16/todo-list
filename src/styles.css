@@ -29,6 +29,13 @@ dialog[open] {
 
 }
 
+#project-buttons {
+    width: 300px;
+
+    display: flex;
+    justify-content: center;
+}
+
 .project-button {
     width: 100px;
 }
