@@ -1,5 +1,6 @@
 export class CreateProject {
-    constructor(title) {
+    constructor(myProjects) {
+        let title = document.querySelector("#project-title-input").value
         this.title = title;
         this.list = [];
     }
@@ -32,15 +33,8 @@ export class CreateTask {
     }
 }
 
-export function placeTaskInProject(taskObject) {
-    taskObject.projectName.list.push(taskObject)
-    console.log(taskObject.projectName.list)
-}
-
 export function createNewProject(myProjects) {
-    let title = document.querySelector("#project-title-input").value
-    let newProject = new CreateProject(title)
+    let newProject = new CreateProject(myProjects)
     myProjects.push(newProject)
-    console.log(myProjects)
     return myProjects
 }

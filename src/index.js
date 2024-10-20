@@ -1,5 +1,5 @@
 import "./styles.css"
-import { CreateProject , CreateTask , placeTaskInProject , createNewProject , createNewTask } from "./structure-logic.js"
+import { CreateProject , CreateTask , createNewProject , createNewTask } from "./structure-logic.js"
 import { setupProjectButtons , loadProject, loadNewProjectButtons, connectNewProjectButtons } from "./display-changes.js";
 
 
@@ -7,8 +7,6 @@ const myProjects = []
 
 setupProjectButtons()
 myProjects[0]= new CreateProject("General");
-//let taskTest = new CreateTask("Finish project", "Wrap up display", "Tomorrow", "HIGH", myProjects[0])
-//placeTaskInProject(taskTest)
 
 let newTaskButton = document.querySelector("#new-task")
 let newTaskForm = document.querySelector("#new-task-form")
