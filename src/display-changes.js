@@ -61,10 +61,21 @@ export function connectNewProjectButtons(myProjects) {
     }
 }
 
+export function connectCheckBox(projectObject) {
+    const projectTitle = document.querySelector("#active-title")
+    for (let i = 0; i < projectObject.list.length; i++) {
+        const taskContent = document.getElementById(i)
+        const checkBox = taskContent.querySelector(".taskCheckBox")
+        checkBox.addEventListener('change', () => {
+            projectObject.list[i].checklist = (projectObject.list[i].checklist === true) ? projectObject.list[i].checklist = false : projectObject.list[i].checklist = true
+        })
+    }
+}
+
 export function loadProject(projectObject) {
     const contentContainer = document.querySelector("#project-content")
     const projectTitle = document.querySelector("#active-title")
-    projectTitle.textContent = "Project: " + projectObject.title
+    projectTitle.textContent = projectObject.title
 
     const oldContentToRemove = document.querySelector("#activeProjectContent")
 
@@ -81,6 +92,7 @@ export function loadProject(projectObject) {
     while (i < projectObject.list.length) {
         const taskContent = document.createElement("div")
         taskContent.classList.add("taskContent")
+        taskContent.id = i
 
         const taskCheckBox = document.createElement("input")
         taskCheckBox.type = "checkbox"
@@ -106,5 +118,6 @@ export function loadProject(projectObject) {
         i++
     }
     contentContainer.appendChild(projectContent)
+    connectCheckBox(projectObject)
 }
 

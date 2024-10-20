@@ -27,6 +27,7 @@ newTaskForm.addEventListener('submit', () => {
     event.preventDefault()
     let newTask = new CreateTask(myProjects)
     console.log(newTask)
+    console.log(myProjects)
     newTask.projectName.list.push(newTask)
     loadProject(newTask.projectName)
     newTaskForm.reset()
