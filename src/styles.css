@@ -41,6 +41,10 @@ dialog[open] {
     background-color: lightblue;
 }
 
+#active-title {
+    padding-left: 5px;
+}
+
 #new-task {
     width: 60px;
 }
@@ -55,10 +59,11 @@ dialog[open] {
 
 .taskContent {
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-columns: 1fr 4fr 3fr 1fr;
     grid-template-rows: 1fr 1fr;
     align-items: center;
     justify-items: left;
+    padding: 10px 0px;
 }
 
 .taskCheckBox {
@@ -66,23 +71,33 @@ dialog[open] {
     grid-row: 1 / span 2;
     width: 20px;
     height: 20px;
-    padding-left: 20px;
+    padding-left: 10px;
     justify-self: center;
 }
 
 .taskTitle {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 1 / span 2;
 }
 
-.taskDesc {
-    grid-column: 2;
-    grid-row: 2;
-}
 
 .taskDueDate {
     grid-column: 3;
     grid-row: 1 / span 2;
+}
+
+.viewTask {
+    grid-column: 4;
+    grid-row: 1;
+    margin: 2px;
+    width: 36px;
+}
+
+.deleteTask {
+    grid-column: 4;
+    grid-row: 2;
+    margin: 2px;
+    width: 36px;
 }
 
 

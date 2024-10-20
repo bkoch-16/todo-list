@@ -104,15 +104,27 @@ export function loadProject(projectObject) {
         taskTitle.textContent = projectObject.list[i].title
         taskContent.appendChild(taskTitle)
         
+        /*
         const taskDesc = document.createElement("span")
         taskDesc.classList.add("taskDesc")
         taskDesc.textContent = projectObject.list[i].desc
         taskContent.appendChild(taskDesc)
+        */
 
         const taskDueDate = document.createElement("span")
         taskDueDate.classList.add("taskDueDate")
         taskDueDate.textContent = projectObject.list[i].dueDate
         taskContent.appendChild(taskDueDate)
+
+        const deleteTask = document.createElement("button")
+        deleteTask.classList.add("deleteTask")
+        deleteTask.textContent = "Del"
+        taskContent.appendChild(deleteTask)
+
+        const viewTask = document.createElement("button")
+        viewTask.classList.add("viewTask")
+        viewTask.textContent = "View"
+        taskContent.appendChild(viewTask)
 
         projectContent.appendChild(taskContent)
         i++
