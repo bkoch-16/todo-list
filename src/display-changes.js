@@ -75,7 +75,7 @@ export function connectTaskElements(projectObject) {
 
         const viewButton = taskContent.querySelector(".viewTask")
         viewButton.addEventListener('click', () => {
-            //add dialog to deal with this?
+            createViewDialog(projectObject.list[i])
         })
 
         const deleteButton = taskContent.querySelector(".deleteTask")
@@ -84,6 +84,38 @@ export function connectTaskElements(projectObject) {
             loadProject(projectObject)
         })
     }
+}
+
+export function createViewDialog(taskObject) {
+    const viewDialog = document.querySelector("#viewDialog")
+    const dialogContent = document.querySelector("#dialogContent")
+
+    const dialogTitle = document.createElement("span")
+    dialogTitle.id = "dialogName"
+    dialogTitle.textContent = taskObject.title
+    dialogContent.appendChild(dialogTitle)
+
+    const dialogDesc = document.createElement("span")
+    dialogDesc.id = "dialogDesc"
+    dialogDesc.textContent = taskObject.desc
+    dialogContent.appendChild(dialogDesc)
+
+    const dialogDueDate = document.createElement("span")
+    dialogDueDate.id = "dialogDueDate"
+    dialogDueDate.textContent = taskObject.dueDate
+    dialogContent.appendChild(dialogDueDate)
+
+    const dialogPriority = document.createElement("span")
+    dialogPriority.id = "dialogPriority"
+    dialogPriority.textContent = taskObject.priority
+    dialogContent.appendChild(dialogPriority)
+
+    const closeDialog = document.createElement("button")
+    closeDialog.id = "closeDialog"
+    closeDialog.textContent = "x"
+    dialogContent.appendChild(closeDialog)
+
+    viewDialog.showModal()
 }
 
 export function loadProject(projectObject) {
