@@ -33,7 +33,7 @@ export class CreateTask {
         this.dueDate = dueDate
         this.priority = priority
         this.checklist = false
-        this.projectName = projectName
+        this.projectName = projectName.title
         
     }
 }
@@ -41,5 +41,14 @@ export class CreateTask {
 export function createNewProject(myProjects) {
     let newProject = new CreateProject(myProjects)
     myProjects.push(newProject)
+    localStorage.setItem('myProjects', JSON.stringify(myProjects))
     return myProjects
+}
+
+export function findProjectIndex(myProjects, newTask) {
+    for (let i = 0; i < myProjects.length; i++) {
+        if (myProjects[i].title === newTask.projectName) {
+            return i
+        }
+    }
 }

@@ -194,6 +194,8 @@ export function loadProject(projectObject) {
     
 
     let i = 0
+    console.log(projectObject)
+    console.log(projectObject.list.length)
     while (i < projectObject.list.length) {
         const taskObject = projectObject.list[i]
 
