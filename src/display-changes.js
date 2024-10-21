@@ -99,8 +99,26 @@ export function connectTaskElements(projectObject) {
             const editTask = document.querySelector("#editTaskButton")
             editTask.addEventListener('click', () => {
                 taskDialog.showModal()
-                const viewDialog = document.querySelector(".viewDialog")        
-                populateEditForm(projectObject)
+                const viewDialog = document.querySelector(".viewDialog")
+                console.log(viewDialog.id)
+                console.log(projectObject.list)
+                console.log(projectObject.list[viewDialog.id])
+                
+                const taskTitleInput = document.querySelector("#task-title-input")
+                taskTitleInput.value = projectObject.list[viewDialog.id].title
+
+                const taskDescInput = document.querySelector("#task-desc-input")
+                taskDescInput.value = projectObject.list[viewDialog.id].desc
+
+                const taskDueDateInput = document.querySelector("#task-due-date-input")
+                taskDueDateInput.value = projectObject.list[viewDialog.id].dueDate
+
+                const taskPriorityInput = document.querySelector("#task-priority-dropdown")
+                taskPriorityInput.value = projectObject.list[viewDialog.id].priority
+
+                const taskProjectInput = document.querySelector("#task-project-dropdown")
+                taskProjectInput.value = projectObject.list[viewDialog.id].projectName.title
+
                 console.log(projectObject)
                 projectObject.list.splice(viewDialog.id, 1)
                 loadProject(projectObject)
@@ -108,26 +126,6 @@ export function connectTaskElements(projectObject) {
             })
         }
     }
-}
-
-export function populateEditForm(projectObject) {
-    const viewDialog = document.querySelector(".viewDialog")  
-
-    const taskTitleInput = document.querySelector("#task-title-input")
-    taskTitleInput.value = projectObject.list[viewDialog.id].title
-
-    const taskDescInput = document.querySelector("#task-desc-input")
-    taskDescInput.value = projectObject.list[viewDialog.id].desc
-
-    const taskDueDateInput = document.querySelector("#task-due-date-input")
-    taskDueDateInput.value = projectObject.list[viewDialog.id].dueDate
-
-    const taskPriorityInput = document.querySelector("#task-priority-dropdown")
-    taskPriorityInput.value = projectObject.list[viewDialog.id].priority
-
-    const taskProjectInput = document.querySelector("#task-project-dropdown")
-    taskProjectInput.value = projectObject.list[viewDialog.id].projectName.title
-
 }
 
 export function createViewDialog(taskObject, indexOfTaskInProject) {
