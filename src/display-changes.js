@@ -112,7 +112,8 @@ export function connectTaskElements(projectObject) {
 
 export function populateEditForm(projectObject) {
     const viewDialog = document.querySelector(".viewDialog")  
-
+    console.log(viewDialog)
+    console.log(projectObject)
     const taskTitleInput = document.querySelector("#task-title-input")
     taskTitleInput.value = projectObject.list[viewDialog.id].title
 
@@ -126,7 +127,7 @@ export function populateEditForm(projectObject) {
     taskPriorityInput.value = projectObject.list[viewDialog.id].priority
 
     const taskProjectInput = document.querySelector("#task-project-dropdown")
-    taskProjectInput.value = projectObject.list[viewDialog.id].projectName.title
+    taskProjectInput.value = projectObject.list[viewDialog.id].projectName
 
 }
 
@@ -212,13 +213,6 @@ export function loadProject(projectObject) {
         taskTitle.classList.add("taskTitle")
         taskTitle.textContent = taskObject.title
         taskContent.appendChild(taskTitle)
-        
-        /*
-        const taskDesc = document.createElement("span")
-        taskDesc.classList.add("taskDesc")
-        taskDesc.textContent = taskObject.desc
-        taskContent.appendChild(taskDesc)
-        */
 
         const taskDueDate = document.createElement("span")
         taskDueDate.classList.add("taskDueDate")
