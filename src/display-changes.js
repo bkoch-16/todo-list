@@ -66,16 +66,18 @@ export function connectTaskElements(projectObject) {
     for (let i = 0; i < projectObject.list.length; i++) {
         const taskContent = document.getElementById(i)
         const checkBox = taskContent.querySelector(".taskCheckBox")
+        
+        const taskObject = projectObject.list[i]
         checkBox.addEventListener('change', () => {
-            projectObject.list[i].checklist = 
-                (projectObject.list[i].checklist === true) ? 
-                projectObject.list[i].checklist = false : 
-                projectObject.list[i].checklist = true
+            taskObject.checklist = 
+                (taskObject.checklist === true) ? 
+                taskObject.checklist = false : 
+                taskObject.checklist = true
         })
 
         const viewButton = taskContent.querySelector(".viewTask")
         viewButton.addEventListener('click', () => {
-            createViewDialog(projectObject.list[i])
+            createViewDialog(taskObject, i)
             connectTaskElements(projectObject)
         })
 
@@ -88,16 +90,35 @@ export function connectTaskElements(projectObject) {
         if (document.querySelector("#closeDialog")) {
             const closeButton = document.querySelector("#closeDialog")
             closeButton.addEventListener('click', () => {
+                const viewDialog = document.querySelector(".viewDialog")
                 viewDialog.close()
             })
         }
         
+        if (document.querySelector("#editTaskButton")) {
+            const editTask = document.querySelector("#editTaskButton")
+            editTask.addEventListener('click', () => {
+                taskDialog.showModal()
+                const viewDialog = document.querySelector(".viewDialog")
+                console.log(viewDialog.id)
+            })
+        }
     }
 }
 
-export function createViewDialog(taskObject) {
-    const viewDialog = document.querySelector("#viewDialog")
-    const dialogContent = document.querySelector("#dialogContent")
+export function createViewDialog(taskObject, indexOfTaskInProject) {
+    const viewDialog = document.querySelector(".viewDialog")
+    viewDialog.id = indexOfTaskInProject
+
+
+    const oldContentToRemove = document.querySelector("#dialogContent")
+    if (oldContentToRemove) {
+        viewDialog.removeChild(oldContentToRemove)
+    }
+
+    const dialogContent = document.createElement("div")
+    dialogContent.id = "dialogContent"
+    viewDialog.appendChild(dialogContent)
 
     const dialogTitle = document.createElement("span")
     dialogTitle.id = "dialogName"
@@ -118,6 +139,11 @@ export function createViewDialog(taskObject) {
     dialogPriority.id = "dialogPriority"
     dialogPriority.textContent = taskObject.priority
     dialogContent.appendChild(dialogPriority)
+
+    const editTask = document.createElement("button")
+    editTask.id = "editTaskButton"
+    editTask.textContent = "Edit"
+    dialogContent.append(editTask)
 
     const closeDialog = document.createElement("button")
     closeDialog.id = "closeDialog"
@@ -145,6 +171,8 @@ export function loadProject(projectObject) {
 
     let i = 0
     while (i < projectObject.list.length) {
+        const taskObject = projectObject.list[i]
+
         const taskContent = document.createElement("div")
         taskContent.classList.add("taskContent")
         taskContent.id = i
@@ -156,19 +184,19 @@ export function loadProject(projectObject) {
 
         const taskTitle = document.createElement("span")
         taskTitle.classList.add("taskTitle")
-        taskTitle.textContent = projectObject.list[i].title
+        taskTitle.textContent = taskObject.title
         taskContent.appendChild(taskTitle)
         
         /*
         const taskDesc = document.createElement("span")
         taskDesc.classList.add("taskDesc")
-        taskDesc.textContent = projectObject.list[i].desc
+        taskDesc.textContent = taskObject.desc
         taskContent.appendChild(taskDesc)
         */
 
         const taskDueDate = document.createElement("span")
         taskDueDate.classList.add("taskDueDate")
-        taskDueDate.textContent = projectObject.list[i].dueDate
+        taskDueDate.textContent = taskObject.dueDate
         taskContent.appendChild(taskDueDate)
 
         const deleteTask = document.createElement("button")
