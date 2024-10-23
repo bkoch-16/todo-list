@@ -1,27 +1,33 @@
 import "./styles.css"
-import { CreateProject , CreateTask , createNewProject , createNewTask, findProjectIndex } from "./structure-logic.js"
+import { CreateProject , CreateTask , createNewProject , findProjectIndex } from "./structure-logic.js"
 import { setupProjectButtons , loadProject, loadNewProjectButtons, connectNewProjectButtons } from "./display-changes.js";
 
-/*
-index.js:40 Uncaught TypeError: Converting circular structure to JSON
-    --> starting at object with constructor 'CreateProject'
-    |     property 'list' -> object with constructor 'Array'
-    |     index 0 -> object with constructor 'CreateTask'
-    --- property 'projectName' closes the circle
-    at JSON.stringify (<anonymous>)
-    at HTMLFormElement.eval (index.js:40:1)
-*/
-var myProjects = []
+let myProjects
+const storedProjects = localStorage.getItem('myProjects')
 
-const retrievedData = localStorage.getItem('myProjects')
-
-if (retrievedData) {
-    console.log("retrieve " +JSON.parse(retrievedData))
+if (storedProjects) {
+    try {
+        myProjects = JSON.parse(storedProjects);
+        console.log('STORED')
+        console.log(myProjects[0])
+        setupProjectButtons()
+        loadProject(myProjects[0], myProjects)
+        loadNewProjectButtons(myProjects)
+        connectNewProjectButtons(myProjects)
+    } catch (error) {
+        console.error('Error parsing local storage data:', error);
+        myProjects = [];
+    }
+}
+else {
+    myProjects = [];
+    myProjects[0]= new CreateProject("General");
+    setupProjectButtons();
+    localStorage.setItem('myProjects', JSON.stringify(myProjects))
 }
 
-setupProjectButtons()
-myProjects[0]= new CreateProject("General");
-localStorage.setItem('myProjects', JSON.stringify(myProjects))
+console.log(myProjects)
+
 
 let newTaskButton = document.querySelector("#new-task")
 let newTaskForm = document.querySelector("#new-task-form")
@@ -46,7 +52,7 @@ newTaskForm.addEventListener('submit', () => {
     let index = findProjectIndex(myProjects, newTask)
     myProjects[index].list.push(newTask)
     console.log(myProjects)
-    loadProject(myProjects[index])
+    loadProject(myProjects[index], myProjects)
     localStorage.setItem('myProjects', JSON.stringify(myProjects))
     newTaskForm.reset()
     document.querySelector("#task-title-input").focus()
@@ -72,10 +78,11 @@ newProjectForm.addEventListener('submit', () => {
     createNewProject(myProjects)
     loadNewProjectButtons(myProjects)
     connectNewProjectButtons(myProjects)
+    localStorage.setItem('myProjects', JSON.stringify(myProjects))
     newProjectForm.reset()
     document.querySelector("#project-title-input").focus()
 })
 
 
-loadProject(myProjects[0])
+
 

@@ -7,17 +7,17 @@ export function setupProjectButtons() {
     generalProject.textContent = "General"
     buttonContainer.appendChild(generalProject)
 
+    const addProject = document.createElement("button")
+    addProject.id = "new-project"
+    addProject.textContent = "+"
+    buttonContainer.appendChild(addProject)
+
     const projectDropdown = document.querySelector("#task-project-dropdown")
     
     const projectOne = document.createElement("option")
     projectOne.value = generalProject.textContent
     projectOne.textContent = generalProject.textContent
     projectDropdown.appendChild(projectOne)
-
-    const addProject = document.createElement("button")
-    addProject.id = "new-project"
-    addProject.textContent = "+"
-    buttonContainer.appendChild(addProject)
 
     return
 }
@@ -30,16 +30,16 @@ export function loadNewProjectButtons(myProjects) {
     for (let i = 0; i < myProjects.length; i++) {
         if (document.querySelector(`#project-${i+1}`) === null) {
             console.log(`test-${i}`)
-            const newProjectButton = document.createElement("button")
-            newProjectButton.id=`project-${i+1}`
-            newProjectButton.classList.add("project-button")
+            const newButton = document.createElement("button")
+            newButton.id=`project-${i+1}`
+            newButton.classList.add("project-button")
             console.log(myProjects[i].title)
-            newProjectButton.textContent = myProjects[i].title
-            buttonContainer.insertBefore(newProjectButton, referenceButton)
+            newButton.textContent = myProjects[i].title
+            buttonContainer.insertBefore(newButton, referenceButton)
 
             const newProjectOption = document.createElement("option")
-            newProjectOption.value = newProjectButton.textContent
-            newProjectOption.textContent = newProjectButton.textContent
+            newProjectOption.value = newButton.textContent
+            newProjectOption.textContent = newButton.textContent
             projectDropdown.appendChild(newProjectOption)
         }
     }
@@ -54,14 +54,14 @@ export function connectNewProjectButtons(myProjects) {
         const activateProject = document.querySelector(projectButtonId)
         console.log(activateProject)
         activateProject.addEventListener('click', () => {
-            loadProject(myProjects[i])
+            loadProject(myProjects[i], myProjects)
         })
 
 
     }
 }
 
-export function connectTaskElements(projectObject) {
+export function connectTaskElements(projectObject, myProjects) {
     const projectTitle = document.querySelector("#active-title")
     for (let i = 0; i < projectObject.list.length; i++) {
         const taskContent = document.getElementById(i)
@@ -78,13 +78,14 @@ export function connectTaskElements(projectObject) {
         const viewButton = taskContent.querySelector(".viewTask")
         viewButton.addEventListener('click', () => {
             createViewDialog(taskObject, i)
-            connectTaskElements(projectObject)
+            connectTaskElements(projectObject, myProjects)
         })
 
         const deleteButton = taskContent.querySelector(".deleteTask")
         deleteButton.addEventListener('click', () => {
             projectObject.list.splice(i,1)
-            loadProject(projectObject)
+            loadProject(projectObject, myProjects)
+            localStorage.setItem('myProjects', JSON.stringify(myProjects))
         })
 
         if (document.querySelector("#closeDialog")) {
@@ -103,7 +104,7 @@ export function connectTaskElements(projectObject) {
                 populateEditForm(projectObject)
                 console.log(projectObject)
                 projectObject.list.splice(viewDialog.id, 1)
-                loadProject(projectObject)
+                loadProject(projectObject, myProjects)
                 viewDialog.close()
             })
         }
@@ -178,7 +179,7 @@ export function createViewDialog(taskObject, indexOfTaskInProject) {
     viewDialog.showModal()
 }
 
-export function loadProject(projectObject) {
+export function loadProject(projectObject, myProjects) {
     const contentContainer = document.querySelector("#project-content")
     const projectTitle = document.querySelector("#active-title")
     projectTitle.textContent = projectObject.title
@@ -233,6 +234,6 @@ export function loadProject(projectObject) {
         i++
     }
     contentContainer.appendChild(projectContent)
-    connectTaskElements(projectObject)
+    connectTaskElements(projectObject, myProjects)
 }
 
