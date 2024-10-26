@@ -69,10 +69,9 @@ export function connectTaskElements(projectObject, myProjects) {
         
         const taskObject = projectObject.list[i]
         checkBox.addEventListener('change', () => {
-            taskObject.checklist = 
-                (taskObject.checklist === true) ? 
-                taskObject.checklist = false : 
-                taskObject.checklist = true
+            taskObject.checklist = checkBox.checked
+            localStorage.setItem('myProjects', JSON.stringify(myProjects))
+
         })
 
         const viewButton = taskContent.querySelector(".viewTask")
@@ -208,6 +207,7 @@ export function loadProject(projectObject, myProjects) {
         const taskCheckBox = document.createElement("input")
         taskCheckBox.type = "checkbox"
         taskCheckBox.classList.add("taskCheckBox")
+        taskCheckBox.checked = taskObject.checklist
         taskContent.appendChild(taskCheckBox)
 
         const taskTitle = document.createElement("span")
