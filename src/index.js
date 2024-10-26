@@ -23,6 +23,9 @@ else {
     myProjects = [];
     myProjects[0]= new CreateProject("General");
     setupProjectButtons();
+    loadProject(myProjects[0], myProjects)
+    loadNewProjectButtons(myProjects)
+    connectNewProjectButtons(myProjects)
     localStorage.setItem('myProjects', JSON.stringify(myProjects))
 }
 
