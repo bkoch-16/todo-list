@@ -117,25 +117,18 @@ export function populateEditForm(projectObject) {
     const taskTitleInput = document.querySelector("#task-title-input")
     taskTitleInput.value = projectObject.list[viewDialog.id].title
 
-                const taskDescInput = document.querySelector("#task-desc-input")
-                taskDescInput.value = projectObject.list[viewDialog.id].desc
+    const taskDescInput = document.querySelector("#task-desc-input")
+    taskDescInput.value = projectObject.list[viewDialog.id].desc
 
-                const taskDueDateInput = document.querySelector("#task-due-date-input")
-                taskDueDateInput.value = projectObject.list[viewDialog.id].dueDate
+    const taskDueDateInput = document.querySelector("#task-due-date-input")
+    taskDueDateInput.value = projectObject.list[viewDialog.id].dueDate
 
-                const taskPriorityInput = document.querySelector("#task-priority-dropdown")
-                taskPriorityInput.value = projectObject.list[viewDialog.id].priority
+    const taskPriorityInput = document.querySelector("#task-priority-dropdown")
+    taskPriorityInput.value = projectObject.list[viewDialog.id].priority
 
     const taskProjectInput = document.querySelector("#task-project-dropdown")
     taskProjectInput.value = projectObject.list[viewDialog.id].projectName
 
-                console.log(projectObject)
-                projectObject.list.splice(viewDialog.id, 1)
-                loadProject(projectObject)
-                viewDialog.close()
-            })
-        }
-    }
 }
 
 export function createViewDialog(taskObject, indexOfTaskInProject) {
