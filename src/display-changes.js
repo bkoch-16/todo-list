@@ -7,17 +7,17 @@ export function setupProjectButtons() {
     generalProject.textContent = "General"
     buttonContainer.appendChild(generalProject)
 
+    const addProject = document.createElement("button")
+    addProject.id = "new-project"
+    addProject.textContent = "+"
+    buttonContainer.appendChild(addProject)
+
     const projectDropdown = document.querySelector("#task-project-dropdown")
     
     const projectOne = document.createElement("option")
     projectOne.value = generalProject.textContent
     projectOne.textContent = generalProject.textContent
     projectDropdown.appendChild(projectOne)
-
-    const addProject = document.createElement("button")
-    addProject.id = "new-project"
-    addProject.textContent = "+"
-    buttonContainer.appendChild(addProject)
 
     return
 }
@@ -30,16 +30,16 @@ export function loadNewProjectButtons(myProjects) {
     for (let i = 0; i < myProjects.length; i++) {
         if (document.querySelector(`#project-${i+1}`) === null) {
             console.log(`test-${i}`)
-            const newProjectButton = document.createElement("button")
-            newProjectButton.id=`project-${i+1}`
-            newProjectButton.classList.add("project-button")
+            const newButton = document.createElement("button")
+            newButton.id=`project-${i+1}`
+            newButton.classList.add("project-button")
             console.log(myProjects[i].title)
-            newProjectButton.textContent = myProjects[i].title
-            buttonContainer.insertBefore(newProjectButton, referenceButton)
+            newButton.textContent = myProjects[i].title
+            buttonContainer.insertBefore(newButton, referenceButton)
 
             const newProjectOption = document.createElement("option")
-            newProjectOption.value = newProjectButton.textContent
-            newProjectOption.textContent = newProjectButton.textContent
+            newProjectOption.value = newButton.textContent
+            newProjectOption.textContent = newButton.textContent
             projectDropdown.appendChild(newProjectOption)
         }
     }
@@ -54,14 +54,14 @@ export function connectNewProjectButtons(myProjects) {
         const activateProject = document.querySelector(projectButtonId)
         console.log(activateProject)
         activateProject.addEventListener('click', () => {
-            loadProject(myProjects[i])
+            loadProject(myProjects[i], myProjects)
         })
 
 
     }
 }
 
-export function connectTaskElements(projectObject) {
+export function connectTaskElements(projectObject, myProjects) {
     const projectTitle = document.querySelector("#active-title")
     for (let i = 0; i < projectObject.list.length; i++) {
         const taskContent = document.getElementById(i)
@@ -69,22 +69,22 @@ export function connectTaskElements(projectObject) {
         
         const taskObject = projectObject.list[i]
         checkBox.addEventListener('change', () => {
-            taskObject.checklist = 
-                (taskObject.checklist === true) ? 
-                taskObject.checklist = false : 
-                taskObject.checklist = true
+            taskObject.checklist = checkBox.checked
+            localStorage.setItem('myProjects', JSON.stringify(myProjects))
+
         })
 
         const viewButton = taskContent.querySelector(".viewTask")
         viewButton.addEventListener('click', () => {
             createViewDialog(taskObject, i)
-            connectTaskElements(projectObject)
+            connectTaskElements(projectObject, myProjects)
         })
 
         const deleteButton = taskContent.querySelector(".deleteTask")
         deleteButton.addEventListener('click', () => {
             projectObject.list.splice(i,1)
-            loadProject(projectObject)
+            loadProject(projectObject, myProjects)
+            localStorage.setItem('myProjects', JSON.stringify(myProjects))
         })
 
         if (document.querySelector("#closeDialog")) {
@@ -99,13 +99,23 @@ export function connectTaskElements(projectObject) {
             const editTask = document.querySelector("#editTaskButton")
             editTask.addEventListener('click', () => {
                 taskDialog.showModal()
-                const viewDialog = document.querySelector(".viewDialog")
-                console.log(viewDialog.id)
-                console.log(projectObject.list)
-                console.log(projectObject.list[viewDialog.id])
-                
-                const taskTitleInput = document.querySelector("#task-title-input")
-                taskTitleInput.value = projectObject.list[viewDialog.id].title
+                const viewDialog = document.querySelector(".viewDialog")        
+                populateEditForm(projectObject)
+                console.log(projectObject)
+                projectObject.list.splice(viewDialog.id, 1)
+                loadProject(projectObject, myProjects)
+                viewDialog.close()
+            })
+        }
+    }
+}
+
+export function populateEditForm(projectObject) {
+    const viewDialog = document.querySelector(".viewDialog")  
+    console.log(viewDialog)
+    console.log(projectObject)
+    const taskTitleInput = document.querySelector("#task-title-input")
+    taskTitleInput.value = projectObject.list[viewDialog.id].title
 
                 const taskDescInput = document.querySelector("#task-desc-input")
                 taskDescInput.value = projectObject.list[viewDialog.id].desc
@@ -116,8 +126,8 @@ export function connectTaskElements(projectObject) {
                 const taskPriorityInput = document.querySelector("#task-priority-dropdown")
                 taskPriorityInput.value = projectObject.list[viewDialog.id].priority
 
-                const taskProjectInput = document.querySelector("#task-project-dropdown")
-                taskProjectInput.value = projectObject.list[viewDialog.id].projectName.title
+    const taskProjectInput = document.querySelector("#task-project-dropdown")
+    taskProjectInput.value = projectObject.list[viewDialog.id].projectName
 
                 console.log(projectObject)
                 projectObject.list.splice(viewDialog.id, 1)
@@ -175,7 +185,7 @@ export function createViewDialog(taskObject, indexOfTaskInProject) {
     viewDialog.showModal()
 }
 
-export function loadProject(projectObject) {
+export function loadProject(projectObject, myProjects) {
     const contentContainer = document.querySelector("#project-content")
     const projectTitle = document.querySelector("#active-title")
     projectTitle.textContent = projectObject.title
@@ -192,6 +202,8 @@ export function loadProject(projectObject) {
     
 
     let i = 0
+    console.log(projectObject)
+    console.log(projectObject.list.length)
     while (i < projectObject.list.length) {
         const taskObject = projectObject.list[i]
 
@@ -202,19 +214,13 @@ export function loadProject(projectObject) {
         const taskCheckBox = document.createElement("input")
         taskCheckBox.type = "checkbox"
         taskCheckBox.classList.add("taskCheckBox")
+        taskCheckBox.checked = taskObject.checklist
         taskContent.appendChild(taskCheckBox)
 
         const taskTitle = document.createElement("span")
         taskTitle.classList.add("taskTitle")
         taskTitle.textContent = taskObject.title
         taskContent.appendChild(taskTitle)
-        
-        /*
-        const taskDesc = document.createElement("span")
-        taskDesc.classList.add("taskDesc")
-        taskDesc.textContent = taskObject.desc
-        taskContent.appendChild(taskDesc)
-        */
 
         const taskDueDate = document.createElement("span")
         taskDueDate.classList.add("taskDueDate")
@@ -235,6 +241,6 @@ export function loadProject(projectObject) {
         i++
     }
     contentContainer.appendChild(projectContent)
-    connectTaskElements(projectObject)
+    connectTaskElements(projectObject, myProjects)
 }
 

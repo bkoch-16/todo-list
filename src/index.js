@@ -1,12 +1,33 @@
 import "./styles.css"
-import { CreateProject , CreateTask , createNewProject , createNewTask } from "./structure-logic.js"
+import { CreateProject , CreateTask , createNewProject , findProjectIndex } from "./structure-logic.js"
 import { setupProjectButtons , loadProject, loadNewProjectButtons, connectNewProjectButtons } from "./display-changes.js";
 
+let myProjects
+const storedProjects = localStorage.getItem('myProjects')
 
-const myProjects = []
+if (storedProjects) {
+    try {
+        myProjects = JSON.parse(storedProjects);
+        console.log('STORED')
+        console.log(myProjects[0])
+        setupProjectButtons()
+        loadProject(myProjects[0], myProjects)
+        loadNewProjectButtons(myProjects)
+        connectNewProjectButtons(myProjects)
+    } catch (error) {
+        console.error('Error parsing local storage data:', error);
+        myProjects = [];
+    }
+}
+else {
+    myProjects = [];
+    myProjects[0]= new CreateProject("General");
+    setupProjectButtons();
+    localStorage.setItem('myProjects', JSON.stringify(myProjects))
+}
 
-setupProjectButtons()
-myProjects[0]= new CreateProject("General");
+console.log(myProjects)
+
 
 let newTaskButton = document.querySelector("#new-task")
 let newTaskForm = document.querySelector("#new-task-form")
@@ -28,8 +49,11 @@ newTaskForm.addEventListener('submit', () => {
     let newTask = new CreateTask(myProjects)
     console.log(newTask)
     console.log(myProjects)
-    newTask.projectName.list.push(newTask)
-    loadProject(newTask.projectName)
+    let index = findProjectIndex(myProjects, newTask)
+    myProjects[index].list.push(newTask)
+    console.log(myProjects)
+    loadProject(myProjects[index], myProjects)
+    localStorage.setItem('myProjects', JSON.stringify(myProjects))
     newTaskForm.reset()
     document.querySelector("#task-title-input").focus()
 })
@@ -54,10 +78,11 @@ newProjectForm.addEventListener('submit', () => {
     createNewProject(myProjects)
     loadNewProjectButtons(myProjects)
     connectNewProjectButtons(myProjects)
+    localStorage.setItem('myProjects', JSON.stringify(myProjects))
     newProjectForm.reset()
     document.querySelector("#project-title-input").focus()
 })
 
 
-loadProject(myProjects[0])
+
 
