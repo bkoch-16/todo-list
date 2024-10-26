@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script defer src="main.js"></script></head>
+<body>
+    <h1>To-Dos</h1>
+    <div id="project-buttons">
+
+    </div>
+    <div id="project-content">
+        <div id="project-header">
+            <span id="active-title"></span>
+            <button id="new-task">+ Task</button>
+        </div>
+    </div>
+    <dialog id="taskDialog">
+        <form id="new-task-form" action="./">
+            <legend class="title-case">New Task Entry</legend>
+            <p class="entry-set">
+                <label for="title" class="task-title">Title</label>
+                <input type="text" name="title" id="task-title-input">
+            </p>
+            <p class="entry-set">
+                <label for="desc" class="task-desc">Description</label>
+                <textarea name="desc" id="task-desc-input"></textarea>
+            </p>
+            <p class="entry-set">
+                <label for="due-date" class="task-due-date">Due Date</label>
+                <input type="date" name="due-date" id="task-due-date-input">
+            </p>
+            <p class="entry-set">
+                <label for="priority" class="task-priority">Priority</label>
+                <select name="priority" id="task-priority-dropdown">
+                    <option value="Urgent">Urgent</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </p>
+            <p class="entry-set">
+                <label for="project" class="task-project">Project</label>
+                <select name="project" id="task-project-dropdown">
+                </select>
+            </p>
+            <button type="submit" id="task-submit-button" class="form-btn">Submit</button>
+            <button type="button" id="task-cancel-button" class="form-btn">Cancel</button>
+        </form>
+    </dialog>
+    <dialog id="projectDialog">
+        <form id="new-project-form" action="./">
+            <legend class="title-case">New Project Entry</legend>
+            <p class="entry-set">
+                <label for="title" class="project-title">Title</label>
+                <input type="text" name="title" id="project-title-input">
+            </p>
+            <button type="submit" id="project-submit-button" class="form-btn">Submit</button>
+            <button type="button" id="project-cancel-button" class="form-btn">Cancel</button>
+        </form>
+    </dialog>
+    <dialog class="viewDialog">
+
+
+        </div>
+    </dialog>
+</body>
+</html>
